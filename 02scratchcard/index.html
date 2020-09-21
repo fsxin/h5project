@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>scratch card</title>
+		<style type="text/css">
+			#scratchCard {
+				width: 600px;
+				height: 200px;
+				position: relative;
+			}
+			#scratchCard .prize {
+				width: 600px;
+				height: 200px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				text-align: center;
+				color: deeppink;
+				font-size: 50px;
+				line-height: 200px;
+			}
+			#scratchCard #canvas {
+				width: 600px;
+				height: 200px;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="scratchCard">
+			<div class="prize"></div>
+			<canvas id="canvas" width="600" height="200"></canvas>
+		</div>
+		<script type="text/javascript">
+			let scratchCard = document.getElementById("scratchCard");
+			let canvas = document.getElementById("canvas");
+			let prize = document.getElementsByClassName("prize")[0];
+			let ctx = canvas.getContext("2d");
+			
+			ctx.fillStyle = "darkgray";
+			ctx.fillRect(0,0,600,200);
+			
+			ctx.font = "64px 微软雅黑";
+			ctx.fillStyle = "#fff";
+			ctx.fillText("刮刮卡",220,115);
+			
+			let isDraw = false;
+			// 当 isDraw 为 true， 允许绘制
+			canvas.onmousedown = function() {
+				isDraw = true;
+			}
+			
+			// 移动鼠标的时候绘制图形，将源图像内的目标的内容给清除掉
+			canvas.onmousemove = function(e) {
+				if (isDraw) {
+					let x = e.pageX - scratchCard.offsetLeft;
+					let y = e.pageY - scratchCard.offsetTop;
+					ctx.globalCompositeOperation = "destination-out";
+					ctx.beginPath();
+					ctx.arc(x,y,20,0,2*Math.PI);
+					ctx.fill();
+					ctx.closePath();
+				}
+			}
+			
+			canvas.onmouseup = function() {
+				isDraw = false;
+			}
+			
+			let prizeArr = [
+				{content: "一等奖  MAC", p: 0.1},
+				{content: "二等奖  iPhone", p: 0.2},
+				{content: "三等奖  pencil", p: 0.3},
+				{content: "谢谢回顾", p: 0.4},
+			];
+			let randomNum = Math.random();
+			if (randomNum < prizeArr[0].p) {
+				prize.innerHTML = prizeArr[0].content;
+			} else if (randomNum < prizeArr[0].p + prizeArr[1].p) {
+				prize.innerHTML = prizeArr[1].content;
+			} else if (randomNum < prizeArr[0].p + prizeArr[1].p + prizeArr[2].p) {
+				prize.innerHTML = prizeArr[2].content;
+			} else {
+				prize.innerHTML = prizeArr[3].content;
+			}
+			
+		</script>
+	</body>
+</html>
