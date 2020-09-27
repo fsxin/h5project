@@ -15,14 +15,14 @@ body {
 .container {
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .container .box {
   position: relative;
   width: 300px;
   height: 200px;
-  margin: 40px 0;
+  margin: 40px 32px;
   background: #ffffff;
   font-family: consolas;
   font-size: 2.5em;
@@ -33,7 +33,7 @@ body {
 }
 
 .container .box.shadow1 {
-  box-shadow: -30px 30px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 30px 30px 20px rgba(0, 0, 0, 0.3);
 }
 
 .container .box.shadow2::before {
